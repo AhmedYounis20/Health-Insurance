@@ -1,0 +1,24 @@
+.search-bar{
+
+min-width: 100px;
+
+}
+.brand{
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+}
+.active{
+    color:brown;
+}
+body{
+    background: url("../images/background.jpg") ;
+    position:relative;
+    margin:0;
+    background-size: cover;
+
+    min-height: 100%;
+
+}
+.navbar-inner {
+    background:transparent;
+}
