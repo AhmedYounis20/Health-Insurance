@@ -13,12 +13,29 @@ min-width: 100px;
 body{
     background: url("../images/background.jpg") ;
     position:relative;
-    margin:0;
     background-size: cover;
-
-    min-height: 100%;
-
+    background-attachment: fixed;
+    padding-bottom: 100px;
+    
 }
 .navbar-inner {
     background:transparent;
+}
+.nav-link{
+    border-radius: 30px;
+}
+
+
+.navs-separate{
+
+    width:50%;
+    margin-left: 25%;
+}
+.second-nav{
+    margin-left: 35%;
+    height: auto;
+    width:30%;
+    border:1px;
+    border-width: 1px;
+    border-style: solid;
 }

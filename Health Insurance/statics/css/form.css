@@ -1,0 +1,30 @@
+.form{
+    background-color:transparent;
+    width: 90%;
+
+}
+.form-item{
+    background-color: transparent;
+    margin-bottom: 1.5%;
+
+}
+.input{
+    min-width: 80%;
+    width:400px;
+}
+.btn{
+    margin-right: 20px;
+    min-width:80px;
+}
+.form-title{
+    color:rgba(128, 115, 0, 0.897);
+}
+.input-name{
+    width:15%;
+}
+.last-name{
+    margin-left: 50px;
+}
+.radio{
+    margin-right: 4%;
+}
