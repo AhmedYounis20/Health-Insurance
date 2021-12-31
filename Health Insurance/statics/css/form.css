@@ -28,3 +28,6 @@
 .radio{
     margin-right: 4%;
 }
+textarea{
+    height: 150px;
+}

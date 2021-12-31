@@ -23,9 +23,14 @@ body{
 }
 .nav-link{
     border-radius: 30px;
+    color: seashell;
+    cursor: pointer;
 }
 
-
+.drop-link{
+    height:25px;
+    text-decoration-line: none;
+}
 .navs-separate{
 
     width:50%;

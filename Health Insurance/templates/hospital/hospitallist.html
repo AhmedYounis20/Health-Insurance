@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+
+
+
+
+{% block content %}
+
+{% for hospital in hospitals %}
+    
+<div class='container card mb-3 '>
+<h3> {{hospital[1]}}
+</h3>
+<p>address:{{hospital[3],hospital[4],hospital[5],[hospital[6]]}}</p>
+</div>
+
+{% endfor %}
+{% endblock %}
