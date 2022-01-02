@@ -30,22 +30,37 @@
                 <a class="nav-link  "  href="{{url_for('HospitalList')}}">covered hospital</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="#"  >plans</a>
+                <a class="nav-link " href="{{ url_for('PlanList')}}"  >plans</a>
               </li>
+              <div class="dropdown  me-1 mb-2 mb-lg-0 ">
+                <a class=" nav-link " style='background-color: transparent; ' id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  customer services
+                </a>
+                <ul class="dropdown-menu "  aria-labelledby="dropdownMenuButton1">
+                  <li class='dropdown-item'><a class="drop-link " href="#"  >profile</a></li>
+                  <li class='dropdown-item'><a class="drop-link" href="#" >upgrade plan</a></li>
+              
+              <li class='dropdown-item'>
+                <a class="drop-link " href="{{ url_for('ClaimList')}}" >claims</a></li>
+                <li class='dropdown-item'>
+                  <a class="drop-link " href="{{ url_for('CreateClaim')}}" >create claim</a>
+                </li>
+    
+    
+                <li class='dropdown-item'>
+                  <a class="drop-link " href="{{ url_for('DependantList')}}" >dependents</a></li>
+                  <li class='dropdown-item'>
+                    <a class="drop-link " href="{{ url_for('AddDependant')}}" >add dependents</a>
+                  </li>
+                  
+                
+                </ul>
+                </div>
+  
+              <li>
 
 
-              <li><a class="nav-link " href="#"  >profile</a></li>
-              <li><a class="nav-link" href="#" >upgrade plan</a></li>
-          
-          <li>
-            <a class="nav-link " href="#" >claims</a></li>
-            <li>
-              <a class="nav-link " href="{{ url_for('CreateClaim')}}" >create claim</a>
-            </li>
-
-
-            <li>
-              <a class="nav-link " href="#" >dependents</a></li>
+                </li>
 
             </ul>
 
@@ -57,10 +72,17 @@
                     <ul class="dropdown-menu "  aria-labelledby="dropdownMenuButton1">
                       
                       <li class='dropdown-item'><a class="drop-link" href="{{url_for('AddHospital')}}">add Hospital</a></li>
-                      <li class='dropdown-item'><a class="drop-link" href="#">remove hospital</a></li>
+                      <li class='dropdown-item'><a class="drop-link" href="{{url_for('RemoveHospital')}}">remove hospital</a></li>
                   
                   <li class='dropdown-item'>
                     <a  href="{{url_for('AddCustomer')}}" class="drop-link" >add Customer</a></li>
+                                      
+                  <li class='dropdown-item'>
+                    <a  href="{{url_for('AddCustomer')}}" class="drop-link" >remove Customer</a></li>
+
+                                      
+                  <li class='dropdown-item'>
+                    <a  href="{{url_for('AddCustomer')}}" class="drop-link" >reslove claims </a></li>
             
                     
                     </ul>

@@ -9,29 +9,41 @@ cur=database.cursor()
 
 def HospitalList():
     try :
-        cur.execute('select name,Country,region,city,Street from hospital;')
+        cur.execute('select name,Country,region,city,Street,hospitalid from hospital;')
 
     except connector.Error as e:
         print("Exception",e)
     return cur.fetchall()
-    exit
 
-def addhospital(name=None,website=None,country=None,region=None,city=None,street=None,phone=None):
-    cur.execute(f"insert into hospital(name,website,country,region,city,street)values({name},{website},{country},{region},{city},{street});")
+def HospitalId(name):
+    cur.execute(f"select hospitalid from hospital where name='{name}' ")  
+    return cur.fetchall()[0][0]
+
+def addhospital(name=None,website=None,country=None,region=None,city=None,street=None,Contacts=[],plans=[]):
+    cur.execute(f"insert into hospital(name,website,country,region,city,street)values('{name}','{website}','{country}','{region}','{city}','{street}');")
     
     database.commit()
-    cur.execute(f'insert into hospitalcontacts(phone)values({phone});')
-    database.commit()
+    cur.execute(f"select hospitalid from hospital where name='{name}'")
+    hos_id=cur.fetchall()[0][0]
+    for plan in plans:
+        print(plan)
+        cur.execute(f"insert into hospitalPlan(hospitalid, planid) values ({hos_id},{plan});") 
+        database.commit()
+    for i in Contacts: 
+        if i != None:
+            cur.execute(f"insert into hospitalcontacts(hospitalid, phone) values ({hos_id},'{i}');") 
+            database.commit()
+    
 def HospitalDetails(id):
     try:
-        cur.execute(f'select name,country,region,city,street,type as plan ,phone from hospital,hospitalplan,plan,hospitalcontacts where hospital.hospitalid=hospitalplan.hospitalid and hospital.hospitalid=hospitalcontacts.hospitalid and plan.planid=hospitalplan.planid and hospital.hospitalid={id};')
+        cur.execute(f'select name,country,region,city,street,type as plan ,phone,website  from hospital left join hospitalplan on  hospital.hospitalid=hospitalplan.hospitalid left join plan on hospitalplan.planid =plan.planid left join hospitalcontacts on  hospital.hospitalid=hospitalcontacts.hospitalid  where hospital.hospitalid={id};')
     except connector.Error  as e:
         print('exception',e)
     return cur.fetchall()
 
 def RemoveHospital(id=None):
     try:
-        cur.execute(f'Delete from hospital where id={id};')
+        cur.execute(f'Delete from hospital where hospitalid={id};')
 
     except connector.Error as e:
         print(e)
@@ -40,9 +52,9 @@ def RemoveHospital(id=None):
 def UpdateCustomer(**kwargs):
     try:
         if kwargs['FirstName']:
-            cur.execute(f"update customer set {kwargs['FirstName']} where Customerid ={kwargs['CustomerId']}")
+            cur.execute(f"update customer set FirstName='{kwargs['FirstName']}' where Customerid ={kwargs['CustomerId']}")
         if kwargs['LastName']:
-            cur.execute(f"update customer set {kwargs['LastName']} where Customerid ={kwargs['CustomerId']}")
+            cur.execute(f"update customer set LastName='{kwargs['LastName']}' where Customerid ={kwargs['CustomerId']}")
         if kwargs['Age']:
             cur.execute(f"update customer set {kwargs['Age']} where Customerid ={kwargs['CustomerId']}")
         if kwargs['PlanId']:
@@ -92,7 +104,7 @@ def AddCustomer(LastName=None,Age=None,Email=None,HolderId=None,PlanId=None,Cont
 
 def AddDependent (hold_id, plan, first, last, email, age, date, admin, contact): 
     try: 
-        cur.execute(f"insert into customer(holderId, planId, FirstName, LastName, Email, Age, RegistrationDate, Stuff) values ('{hold_id}','{plan}','{first}','{last}','{email}','{age}','{date}','{admin}');") 
+        cur.execute(f"insert into customer(holderId, planId, FirstName, LastName, Email, Age, RegistrationDate, Stuff) values ({hold_id},{plan},'{first}','{last}','{email}','{age}','{date}','{admin}');") 
     except connector.Error as e: 
         print('Exception',e) 
     database.commit(); 
@@ -128,17 +140,20 @@ def CustomerListClaim (customerId) :
 
 def planlist():
     try:
-        cur.execute('select planid,type from plan;')
+        cur.execute('select planid,type,Description from plan;')
     except connector.Error as e:
         print("exception", e)
     return(cur.fetchall())
-planlist()
-def plandetails(id):
+def PlanDetails(id):
+    result=[]
     try:
-        cur.execute(f'select type,description,name,website,country,region,city,street, from plan,hospitalplan,hospital where plan.planid=hospitalplan.planid and hospitalid=hospitalplanid and plan.planid={id};')
+        cur.execute(f'select type,description,name,website,country,region,city,street from plan,hospitalplan,hospital where plan.planid=hospitalplan.planid and hospitalplan.hospitalid=hospital.hospitalid and plan.planid={id};')
+        result+=cur.fetchall()
     except connector.Error as e:
         print("exception", e)
-    return cur.fetchall()
+    return result
+
+
 def ClaimDetail(id):
     try:
         cur.execute(f'select name,country,region,city,street,customerid,approved,submittingdate,expense,description,firstname,lastname from customer,claim,hospital where claimid= {id} and claim.customerid=customer.customerid and hospital.hospitalid=claim.hospitalid and claim.customerid=customer.customerid;')

@@ -5,34 +5,35 @@
 
 {% block content %}
  <h1 class='container form-title' > <em><strong> add Hosptial</strong></em></h1>
-<form action="" class='form container'>
+ <form action="{{url_for('AddHospital')}}" class='form container' method="post">
 
     <label class='form-item' for="Name">Hospital Name:</label> <br>
-    <input class='form-item input' type="text" name='Name'>    <br>
+    <input class='form-item input' type="text" name='Name' value='' >    <br>
     <label class='form-item' for="Name">Hospital Website:</label> <br>
-    <input class='form-item input' type="url" name='Website'>    <br>
-     <label class='form-item' for="Phone">Hospital phone:</label> <br>
-    <input class='form-item input ' type="tel" name='Name' pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}"> <br>
-    <label class='form-item' for="Country">Country:</label> <br>
-    <input class='form-item input' type="url" name='Country'>    <br>
+    <input class='form-item input' type="url" name='Website' values="http://www.example.com">    <br>
+     <input class='form-item' type="checkbox"  name="plan" value="1">
+<label for="plan"> basic</label><br>
+<input class='form-item' type="checkbox"  name="plan" value="2">
+<label for="plan"> premium</label><br>
+<input class='form-item' type="checkbox"  name="plan" value="3">
+<label for="plan"> gold</label><br>
+<label class='form-item' for="Phone" >Hospital phone:</label> <br>
+    <input class='form-item input ' type="tel" name='Phone'  values='+321432123' > <br>
+    <label class='form-item' for="Country" >Country:</label> <br>
+    <input class='form-item input' type="text" name='Country'>    <br>
     <label class='form-item' for="Region">Region:</label> <br>
-    <input class='form-item input' type="url" name='Website'>    <br>
+    <input class='form-item input' type="text" name='Region'>    <br>
     <label class='form-item' for="City">City</label> <br>
-    <input class='form-item input' type="url" name='City'>    <br>
+    <input class='form-item input' type="text" name='City'>    <br>
   
     <label class='form-item' for="Street">Street</label> <br>
-    <input class='form-item input' type="url" name='Street'>    <br>
+    <input class='form-item input' type="text" name='Street'>    <br>
   
   
     <input class='btn btn-primary pr-3' type="submit" value='add'> 
-    <a href='#' class='btn btn-danger'> cancel</a>
+    <a href="{{url_for('HospitalList')}}" class='btn btn-danger'>Cancel</a>
 
-
- </form>
-
-
-
-
+ </form> -->
 
 
 {% endblock %}

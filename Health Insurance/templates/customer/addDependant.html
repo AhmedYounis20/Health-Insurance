@@ -1,0 +1,49 @@
+{% extends 'layout.html' %} 
+
+
+{% block content %}  
+ <h1 class='container form-title' > <em><strong> add Dependant</strong></em></h1>
+<form action="" class='form container'>
+    <label class='form-item ' for="CustomerEmail">CustomerEmail:</label> 
+    <input class='form-item input' type="email" name='CustomerEmail'> <br>
+    <label class='form-item' for="FirstName">First Name:</label> 
+    <input class='form-item input-name' type="text" name='FirstName'>    
+    <label class='form-item last-name' for="lastName">Last Name:</label> 
+    <input class='form-item input-name ' type="text" name='LastName'>    <br>
+     <label class='form-item' for="Email">Email:</label> <br>
+     <input class='form-item input ' type="email" name='Email'>    <br>
+     <label class='form-item' for="tel">Phone:</label> <br>
+     <input class='form-item input ' type="tel" name='Name' pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}"> <br>
+     <label class='form-item' for="Plan">Plan:</label> <br>
+     <input type="radio" name="Plan" value='Basic'>      
+     <label class='form-item radio' for="Basic">Basic</label> 
+     <input type="radio" name="Plan" value='Premium'>    
+     <label class='form-item radio' for="Premium">Premium</label> 
+
+     <input class='form-item ' type="radio" name="Plan" value='Gold' >
+     <label class='form-item  ' for="Gold">Gold</label> <br> 
+     <label class='form-item' for="Age">Age:</label> <br>
+
+     <input class='form-item input' type="number" name='Age'>    <br>
+    <label class='form-item' for="Country">Country:</label> <br>
+    <input class='form-item input' type="url" name='Country'>    <br>
+    <label class='form-item' for="Region">Region:</label> <br>
+    <input class='form-item input' type="url" name='Website'>    <br>
+    <label class='form-item' for="City">City</label> <br>
+    <input class='form-item input' type="url" name='City'>    <br>
+  
+    <label class='form-item' for="Street">Street</label> <br>
+    <input class='form-item input' type="url" name='Street'>    <br>
+  
+  
+    <input class='btn btn-primary pr-3' type="submit" value='add'> 
+    <a href='#' class='btn btn-danger'> cancel</a>
+
+
+ </form>
+
+
+
+
+
+{% endblock %}

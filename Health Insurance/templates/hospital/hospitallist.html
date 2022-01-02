@@ -9,9 +9,17 @@
 {% for hospital in hospitals %}
     
 <div class='container card mb-3 '>
-<h3> {{hospital[1]}}
+<h3>  <a href="{{url_for('HospitalDetails',id=hospital[5])}}">
+     
+    {{hospital[0]}} </a>
 </h3>
-<p>address:{{hospital[3],hospital[4],hospital[5],[hospital[6]]}}</p>
+<span><em>Address:
+
+{% for i in range(1,4) %}
+ {% if hospital[i] != 'None' %}{{hospital[i]}}, {% endif %} 
+{% endfor %}
+ {% if hospital[4] != 'None' %}{{hospital[4]}}. {% endif %} </em></span>
+
 </div>
 
 {% endfor %}

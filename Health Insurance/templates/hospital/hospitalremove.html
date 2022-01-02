@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+
+
+
+
+
+
+{% block content %}
+<form class='container form-control' action="" method='post'>
+
+
+    <label for="Hosptials">Choose a Hospital:</label>
+
+    <select class='form-control' name="hospital" >
+    
+    {% for hospital  in hospitals %}
+    <option value="{{hospital[5]}}">{{hospital[0]}}</option>
+    
+    
+    
+    {% endfor %}
+    </select>
+    
+    <input class='btn btn-primary' type="submit" value='remove'> 
+    <a class='btn btn-danger' href="{{url_for('HospitalList')}}"> Cancel </a>
+</form>
+
+{% endblock %}

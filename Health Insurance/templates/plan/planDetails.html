@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+
+
+
+
+
+
+{% block content %}
+
+<h1>plan: {{records[0][0]}}</h1>
+<p><em><strong>Descreption:</strong></br>{{records[0][1]}}</strong></em></p>
+
+
+<h2>hospitals</h2>
+{% for record  in records %}
+    
+<div class='container card mb-3 '>
+<h3> {{record[2]}}
+</h3>
+<p>{{record[3]}}</p>
+<p>{{record[4]}}</p>
+<p>{{record[5]}}</p>
+<p>{{record[6]}}</p>
+<p>{{record[7]}}</p>
+</div>
+
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+
+
+
+
+
+
+{% block content %}
+
+{% for plan in plans %}
+    
+<div class='container card mb-3 '>
+<a href="{{url_for('PlanDetails',id=plan[0])}}"> <h3> {{plan[1]}}</h3></a>
+<p>{{plan[2]}}</p>
+</div>
+
+{% endfor %}
+{% endblock %}
