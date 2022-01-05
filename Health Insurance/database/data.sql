@@ -50,7 +50,7 @@ create table Customer(
   Age int,
   RegistrationDate Date,
   Stuff boolean,
-  primary key (CustomerId),
+  primary key (CustomerId,Email),
   foreign key (HolderId) references Customer(CustomerId)  ON DELETE CASCADE,  /* one to many relationship between customer ---> dependents  */
   foreign key (PlanId) references Plan(PlanId)   ON DELETE CASCADE /* one to many relationship between Plan ---> Customers/dependents */
 );

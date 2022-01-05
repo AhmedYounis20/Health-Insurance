@@ -8,25 +8,33 @@
  <form action="{{url_for('AddHospital')}}" class='form container' method="post">
 
     <label class='form-item' for="Name">Hospital Name:</label> <br>
-    <input class='form-item input' type="text" name='Name' value='' >    <br>
+    <input class='form-item input' type="text" name='Name' value=''  required>    <br>
     <label class='form-item' for="Name">Hospital Website:</label> <br>
     <input class='form-item input' type="url" name='Website' values="http://www.example.com">    <br>
      <input class='form-item' type="checkbox"  name="plan" value="1">
 <label for="plan"> basic</label><br>
-<input class='form-item' type="checkbox"  name="plan" value="2">
+<input class='form-item' type="checkbox"  name="plan" value="2" >
 <label for="plan"> premium</label><br>
-<input class='form-item' type="checkbox"  name="plan" value="3">
+<input class='form-item' type="checkbox"  name="plan" value="3" >
 <label for="plan"> gold</label><br>
 <label class='form-item' for="Phone" >Hospital phone:</label> <br>
-    <input class='form-item input ' type="tel" name='Phone'  values='+321432123' > <br>
-    <label class='form-item' for="Country" >Country:</label> <br>
+
+
+    <div class='contacts'>
+      <input class='form-item input ' type="tel" name='Phone'  placeholder='+321432123' > 
+     <button class='add_phone'><i class="fas fa-plus-square"></i></button><br>
+ 
+ 
+ 
+ </div>
+    <label class='form-item' for="Country" required>Country:</label> <br>
     <input class='form-item input' type="text" name='Country'>    <br>
-    <label class='form-item' for="Region">Region:</label> <br>
+    <label class='form-item' for="Region" required>Region:</label> <br>
     <input class='form-item input' type="text" name='Region'>    <br>
-    <label class='form-item' for="City">City</label> <br>
+    <label class='form-item' for="City" required>City</label> <br>
     <input class='form-item input' type="text" name='City'>    <br>
   
-    <label class='form-item' for="Street">Street</label> <br>
+    <label class='form-item' for="Street" required>Street</label> <br>
     <input class='form-item input' type="text" name='Street'>    <br>
   
   

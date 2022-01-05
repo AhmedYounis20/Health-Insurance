@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+
+
+
+
+
+
+{% block content %}
+
+{% for customer in customers %}
+    
+<div class='container card mb-3 '>
+<a  > <h3>CustomerID:{{customer[0]}}</h3></a>
+{% if customer[0] != customer[1] %}
+<p>This Customer is a dependant of customer with ID:{{customer[1]}}</p>
+{% else %}<p>This customer is not a dependant</p>
+{% endif %}
+<p>PlanID:{{customer[2]}}</p>
+<p>FirstName:{{customer[3]}}</p>
+<p>LastName:{{customer[4]}}</p>
+<p>Email:{{customer[5]}}</p>
+<p>Age:{{customer[6]}}</p>
+<p>Registration Date:{{customer[7]}}</p>
+{% if customer[8]==1 %}<p>This Customer is a company employee</p>
+{% endif %}
+</div>
+
+{% endfor %}
+{% endblock %}

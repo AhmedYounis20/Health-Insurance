@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
     <title>Health Insurance </title>
 
 
@@ -37,7 +38,7 @@
                   customer services
                 </a>
                 <ul class="dropdown-menu "  aria-labelledby="dropdownMenuButton1">
-                  <li class='dropdown-item'><a class="drop-link " href="#"  >profile</a></li>
+                  <li class='dropdown-item'><a class="drop-link " id='profile' href="#"  >profile</a></li>
                   <li class='dropdown-item'><a class="drop-link" href="#" >upgrade plan</a></li>
               
               <li class='dropdown-item'>
@@ -46,11 +47,9 @@
                   <a class="drop-link " href="{{ url_for('CreateClaim')}}" >create claim</a>
                 </li>
     
-    
-                <li class='dropdown-item'>
-                  <a class="drop-link " href="{{ url_for('DependantList')}}" >dependents</a></li>
+
                   <li class='dropdown-item'>
-                    <a class="drop-link " href="{{ url_for('AddDependant')}}" >add dependents</a>
+                    <a class="drop-link " href="{{ url_for('AddDependent')}}" >add dependents</a>
                   </li>
                   
                 
@@ -78,11 +77,14 @@
                     <a  href="{{url_for('AddCustomer')}}" class="drop-link" >add Customer</a></li>
                                       
                   <li class='dropdown-item'>
-                    <a  href="{{url_for('AddCustomer')}}" class="drop-link" >remove Customer</a></li>
-
+                    <a  href="{{url_for('RemoveCustomer')}}" class="drop-link" >remove Customer</a></li>
+                    <li class='dropdown-item'>
+                      <a  href="{{url_for('CustomerList')}}" class="drop-link" >view all Customers</a></li>
+  
+                                        
                                       
                   <li class='dropdown-item'>
-                    <a  href="{{url_for('AddCustomer')}}" class="drop-link" >reslove claims </a></li>
+                    <a  href="{{url_for('resolveClaims')}}" class="drop-link" >reslove claims </a></li>
             
                     
                     </ul>

@@ -12,32 +12,30 @@ app=Flask(__name__,template_folder='../templates',static_folder='../statics')
 app.debug = True
 
 
+############ home Routes ###################
+@app.route('/')
+def first():
+    return redirect('/home')
 
 @app.route('/home')
 def home():
     return render_template('layout.html')
-@app.route('/admin')
-def admin():
-    return '''str(db.hospital.query())'''
-@app.route('/customer/register')
-def AddCustomer():
-    if request.method=="GET":
-        return render_template('customer/customerform.html')
-@app.route('/customer/all')
-def customerList():
-    return 'customerlist'
-# app.route('/customer/<name>-<id>/dependant/add')
-# def AddDependant(name,id):
-#     if request.method=="GET":
-#         return render_template("customer/dependantform.html")
-# app.route('/customer/<name>-<id>/dependant/all')
-# def AddDependant(name,id):
-#     if request.method=="GET":
-#         return render_template("customer/dependants.html")
 
-@app.route('/')
-def first():
-    return redirect('/home')
+
+
+
+########## Plans Routes ##################
+@app.route('/plan/all')
+def PlanList():
+    plans=D.planlist()
+    return render_template('/plan/planList.html',plans=plans)
+
+@app.route('/plan/<id>')
+def PlanDetails(id):
+    records=D.PlanDetails(id)
+    return render_template('/plan/planDetails.html',records=records)
+
+############## Hospitals Routes #################
 @app.route('/hospital/register',methods = ['GET','POST'])
 def AddHospital():
     if request.method=='GET':
@@ -45,12 +43,10 @@ def AddHospital():
 
     if request.method=='POST':
         
-        D.addhospital(request.form.get('Name'),request.form.get('Website'),request.form.get('Country'),request.form.get('Region'),request.form.get('City'),request.form.get('Street'),[request.form.get('Region')],request.form.getlist('plan'))
+        D.addhospital(request.form.get('Name'),request.form.get('Website'),request.form.get('Country'),request.form.get('Region'),request.form.get('City'),request.form.get('Street'),request.form.getlist('Phone'),request.form.getlist('plan'))
         hos_id=D.HospitalId(request.form.get('Name'))
 
         return redirect(url_for('HospitalDetails',id=hos_id))
-
-
 
 @app.route('/hospital/<id>')
 def HospitalDetails(id):
@@ -71,7 +67,6 @@ def HospitalList():
     hospitals=D.HospitalList()
     return render_template('hospital/hospitallist.html',hospitals=hospitals)
 
-
 @app.route('/hospital/remove/',methods=['POST','GET'])
 def RemoveHospital():
     if request.method=='GET':
@@ -82,32 +77,97 @@ def RemoveHospital():
         D.RemoveHospital(request.form.get('hospital'))
         return redirect(url_for('HospitalList'))
 
+############## cutomer Routes #################
+@app.route('/customer/register',methods=['POST','GET'])
+def AddCustomer():
+    if request.method=="GET":
+        return render_template('customer/customerform.html')
+    else:
+        D.AddCustomer(FirstName=request.form.get("FirstName"),LastName=request.form.get("LastName"),Age=request.form.get("Age"),Email=request.form.get("Email"),PlanId=request.form.get("Plan"),Contacts=request.form.getlist("Phone"))
+        return redirect(f'/customer/Profile?Email={request.form.get("Email")}')
 
-@app.route('/claim/create')
-def CreateClaim():
-    return render_template('claim/claimform.html')
+@app.route('/customer/Profile')
+def CustomerProfile():
+    customer=D.CustomerDetails(email=request.args.get('Email'))
+    contacts=[i[6]  for i in customer if i[6]!=None ]
+    dependants=D.DependentList(customer[0][0])
+    return render_template('customer/customerProfile.html',customer=customer,contacts=contacts,dependants=dependants) 
 
-@app.route('/claim/all')
-def ClaimList():
-    return render_template('/claim/claimList.html')
+@app.route('/customer/all')
+def CustomerList():
+    return render_template('customer/customerlist.html',customers=D.CustomerList())
+
+@app.route('/customer/remove',methods=['GET','POST'])
+def RemoveCustomer():
+    if request.method=='GET':
+        customers=D.CustomerList()
+        return render_template('customer/customerRemove.html',customers=customers)
+    else:
+        print()
+        D.RemoveCustomer(request.form.get('customer'))
+        return redirect(url_for('CustomerList'))
+
+############## Dependents Routes #################
+@app.route('/customer/addDependent', methods=['POST','GET'])
+def AddDependent():
+
+    if request.method=='GET':
+        return render_template('/customer/addDependant.html')
+    else:
+
+        holder_email = request.form.get('HolderEmail')
+        first = request.form.get('FirstName')
+        last = request.form.get('LastName')
+        email = request.form.get('Email')
+        plan = request.form.get('Plan')
+        age = request.form.get('Age')
+        D.AddDependent(holder_email, first, last, email, plan, age)
+        return redirect('/')
+    
 @app.route('/customer/dependantlist')
 def DependantList():
     return render_template('/customer/dependantList.html')
-@app.route('/customer/adddependant')
 
-def AddDependant():
-    return render_template('/customer/addDependant.html')
+############## Claims Routes #################
 
+@app.route('/claim/create' , methods=["POST","GET"])
+def CreateClaim():
+    if request.method == "GET" :
+        return render_template('claim/claimform.html')
+    else:
+        CustomerEmail = request.form["Email"]
+        HospitalName = request.form["HospitalName"]
+        Expense = request.form["Expense"]
+        Description = request.form["Description"]
+        D.CreateClaim (CustomerEmail,HospitalName,Description ,Expense)
+        return redirect(url_for('home'))
 
-@app.route('/plan/all')
-def PlanList():
-    plans=D.planlist()
-    return render_template('/plan/planList.html',plans=plans)
+@app.route('/claim/<id>')
+def ClaimDetails(id):
+    records=D.ClaimDetail(id)
+    return render_template('/claim/claimdetails.html',records=records)    
 
-@app.route('/plan/<id>')
-def PlanDetails(id):
-    records=D.PlanDetails(id)
-    return render_template('/plan/planDetails.html',records=records)
+@app.route('/claim/all', methods=['POST','GET'])
+def ClaimList():
+    if request.method == 'GET':
+        return render_template('/claim/claimList.html')
+    else:
+        customer_id = request.form.get('customer_id')
+        claims = D.CustomerClaims(customer_id)
+        return render_template('/claim/claimListlist.html', data=claims)
 
+@app.route('/home/resolveClaims')
+def resolveClaims():
+    allclaims =D.resolveClaims()
+
+    return render_template('/claim/resolveClaims.html' , allclaims=allclaims)
+
+@app.route('/home/resolveClaims/<claimId>')
+def resolving(claimId):
+    D.resolveTheClaim(claimId)
+    allclaims =D.resolveClaims()
+    return render_template('/claim/resolveClaims.html' , allclaims=allclaims)
+
+########################### main function to run flask
 if __name__=='__main__':
     app.run(debug=True)

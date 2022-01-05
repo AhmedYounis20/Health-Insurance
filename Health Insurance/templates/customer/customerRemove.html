@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+
+
+
+
+
+
+{% block content %}
+<form class='container form-control' action="" method='post'>
+
+
+    <label for="Customers">Choose a Customer:</label>
+
+    <datalist  id="suggestions" >
+    
+    {% for customer  in customers %}
+    <option value="{{customer[0]}}">{{customer[3]}} {{customer[4]}} with Email: {{customer[5]}}</option>
+    
+    
+    
+    {% endfor %}
+    </datalist>
+    <input  class='form-control ' id='Remove' autoComplete="on" list="suggestions" name='customer' placeholder="search for customer..."/> 
+
+
+
+    
+    <input class='btn btn-primary' type="submit" value='remove'> 
+    <a class='btn btn-danger' href="{{url_for('home')}}"> Cancel </a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container-fluid p-5">
+        <div class='container-fluid pb-2'>
+        </div>
+        <table id='main-table' class="table table-dark ">
+            <thead>
+            <tr>
+                <th class="text-center"scope="col">#</th>
+                <th class="text-center"scope="col">Customer Email</th>
+                <th class="text-center"scope="col">Hospital Name</th>
+                <th class="text-center"scope="col">Subitting Date</th>
+                <th class="text-center"scope="col">Expense $</th>
+                <th class="text-center"scope="col">Descritption</th>
+                <th class="text-center"scope="col">State</th>
+
+            </tr>
+            </thead>
+            <tbody id="parentBody">
+                <!-- [
+                    ['zegzag', 'KhatabElgen@gmail.com', 'un resolved', '2022-01-02', 2343, 'pl pla\r\ni am fucking khatabb!!!'], 
+                    ['ElZantot Hospital', 'm@gmail.com', 'un resolved', '2022-01-02', 1000, 'pla pla pla'], 
+                    ['elhoa', 'KhatabElgen@gmail.com', 'un resolved', '2022-01-02', 9000, 'PLA PLA !!'], 
+                    ['zegzag', 'KarimElDeep@gmail.com', 'un resolved', '2022-01-04', 1258, 'Teeth operation']
+                ] -->
+                {%for claim in allclaims%}
+                    {%if claim[3] == 'un resolved'%}
+                        <tr>
+                            <th scope="row">#</th>
+                            <td class='text-center'>{{claim[2]}}</td>
+                            <td class='text-center'>{{claim[1]}}</td>
+                            <td class='text-center'>{{claim[4]}}</td>
+                            <td class='text-center'>{{claim[5]}} $</td>
+                            <td class='text-center'>{{claim[6]}}</td>
+                            <td class='text-center'>{{claim[3]}}</td>
+                            <td class='text-center'><a href="{{url_for('resolving',claimId=claim[0])}}">resolve</a></td>
+                            
+                        </tr>
+                    {%endif%}
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="container-fluid p-5">
+        <div class='container-fluid pb-2'>
+        </div>
+        <table id='main-table' class="table table-dark ">
+            <thead>
+            <tr>
+                <th class="text-center"scope="col">#</th>
+                <th class="text-center"scope="col">Customer Email</th>
+                <th class="text-center"scope="col">Hospital Name</th>
+                <th class="text-center"scope="col">Subitting Date</th>
+                <th class="text-center"scope="col">Expense $</th>
+                <th class="text-center"scope="col">Descritption</th>
+                <th class="text-center"scope="col">State</th>
+
+            </tr>
+            </thead>
+            
+            <tbody id="parentBody" class='mt-5'>
+                <!-- [
+                    ['zegzag', 'KhatabElgen@gmail.com', 'un resolved', '2022-01-02', 2343, 'pl pla\r\ni am fucking khatabb!!!'], 
+                    ['ElZantot Hospital', 'm@gmail.com', 'un resolved', '2022-01-02', 1000, 'pla pla pla'], 
+                    ['elhoa', 'KhatabElgen@gmail.com', 'un resolved', '2022-01-02', 9000, 'PLA PLA !!'], 
+                    ['zegzag', 'KarimElDeep@gmail.com', 'un resolved', '2022-01-04', 1258, 'Teeth operation']
+                ] -->
+                {%for claim in allclaims%}
+                    {%if claim[3] == 'resolved'%}
+                        <tr>
+                            <th scope="row">#</th>
+                            <td class='text-center'>{{claim[2]}}</td>
+                            <td class='text-center'>{{claim[1]}}</td>
+                            <td class='text-center'>{{claim[4]}}</td>
+                            <td class='text-center'>{{claim[5]}} $</td>
+                            <td class='text-center'>{{claim[6]}}</td>
+                            <td class='text-center'>{{claim[3]}}</td>
+                            
+                        </tr>
+                    {%endif%}
+                {%endfor%}
+            </tbody>
+
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+
+
+
+
+
+
+{% block content %}
+<h1><strong> {{customer[0][2] }} {{customer[0][3]}}
+</strong></h1>
+
+<h2><strong > Email: <a href=""><em>{{customer[0][4]}}</em> </a>
+</strong></h2>
+<h2><strong > Age: <em>{{customer[0][7]}}</em>
+</strong></h2>
+<h2><strong > Registration Date:<em>{{customer[0][8]}}</em>
+</strong></h2>
+<h2><strong>Plan: {{customer[0][5]}}</strong></h2>
+
+
+{% if contacts|length > 0 %} 
+<h2><strong>Contacts:</strong></h2>
+<ul>
+{% for contact in contacts %} 
+
+
+<li> <a href="tel:{{contact}}"> {{contact}}</a></li>
+
+{% endfor %}
+{% endif %}
+
+</ul>
+{% if dependants|length > 0 %} 
+<h2>Dependants</h2>
+{% for dependant in dependants %}
+<div class='container card mb-3 '>
+    <h2>  
+         
+        {{dependant[1]}} {{dependant[2]}}  
+    </h2>
+    <h3>Age: {{dependant[3]}}</h3>
+    
+    <h3>Registration Date: {{dependant[4]}}</h3>
+    <p>Plan: {{dependant[5]}}</p>
+
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+
+
+{% endblock %}

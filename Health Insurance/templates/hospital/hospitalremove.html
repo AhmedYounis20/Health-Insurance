@@ -12,18 +12,28 @@
 
     <label for="Hosptials">Choose a Hospital:</label>
 
-    <select class='form-control' name="hospital" >
+
+    <input  class='form-control' autoComplete="on" list="suggestions" name='hospital' placeholder="search for hospital..."/> 
+
+        <datalist id="suggestions">
     
     {% for hospital  in hospitals %}
-    <option value="{{hospital[5]}}">{{hospital[0]}}</option>
+    <option  value='{{hospital[5]}}'>{{hospital[0]}}</option>
     
     
     
     {% endfor %}
-    </select>
+</datalist>
+
+
+
+
     
+
     <input class='btn btn-primary' type="submit" value='remove'> 
     <a class='btn btn-danger' href="{{url_for('HospitalList')}}"> Cancel </a>
 </form>
+
+
 
 {% endblock %}

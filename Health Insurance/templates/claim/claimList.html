@@ -1,3 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
+<h1 class='container form-title' > <em><strong> customer claims</strong></em></h1>
+<form action="all" class='form container' method='post'>
+    <label class='form-item' for="customer_id">Customer ID:</label> <br>
+    <input class='form-item input' type="number" name='customer_id'> <br>
+    <input class='btn btn-primary pr-3' type="submit" value='show claims'> 
+    <a href='/' class='btn btn-danger'> cancel</a>
+</form>
 {% endblock %}

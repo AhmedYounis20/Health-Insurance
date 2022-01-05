@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1 class='container form-title' > <em><strong> customer claims list</strong></em></h1>
+{% for claim in data %}
+    
+<div class='container card mb-3 '>
+<h3>  <a href="{{url_for('ClaimDetails',id=claim[0])}}">
+     
+    {{claim[0]}} </a>
+</h3>
+</div>
+
+{% endfor %}
+{% endblock %}
