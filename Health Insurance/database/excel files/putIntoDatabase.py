@@ -121,7 +121,7 @@ print(mycursor.rowcount,'customer contacts inserted')
 
 claims=openpyxl.load_workbook('claims.xlsx')
 
-sql='insert into claim(hospitalid,customerid,approved,submittingdate,expense,description)values(%s,%s,%s,%s,%s,%s);'
+sql='insert into claim(hospitalid,customerid,resolved,submittingdate,expense,description)values(%s,%s,%s,%s,%s,%s);'
 values=[]
 claims=claims.active
 

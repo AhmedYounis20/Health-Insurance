@@ -16,7 +16,7 @@
 </strong></h2>
 <h2><strong > Registration Date:<em>{{customer[0][8]}}</em>
 </strong></h2>
-<h2><strong>Plan: {{customer[0][5]}}</strong></h2>
+<h2><strong>Plan: <a href="{{url_for('PlanDetails',id=customer[0][9])}}">{{customer[0][5]}}</a></strong></h2>
 
 
 {% if contacts|length > 0 %} 
@@ -42,7 +42,7 @@
     <h3>Age: {{dependant[3]}}</h3>
     
     <h3>Registration Date: {{dependant[4]}}</h3>
-    <p>Plan: {{dependant[5]}}</p>
+    <p>Plan:  {{dependant[5]}}</p>
 
 </div>
 

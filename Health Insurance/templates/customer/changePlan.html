@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container-fluid center_div">
+        <form method='post' >
+            <div class="form-row align-items-center ">
+              <div class="col-lg-3 my-1">
+                <label class="sr-only" for="inlineFormInputGroupUsername">Email</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                  </div>
+                  <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="Email" placeholder="Email">
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="newPlan" id="exampleRadios1" value="1" checked>
+                  <label class="form-check-label" for="exampleRadios1">
+                    Basic
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="newPlan" id="exampleRadios2" value="2">
+                  <label class="form-check-label" for="exampleRadios2">
+                    Premium
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="newPlan" id="exampleRadios2" value="3">
+                  <label class="form-check-label" for="exampleRadios2">
+                    Gold
+                  </label>
+                </div>
+                </div>
+                </div>
+              </div>
+              <div class="col-auto mx-4">
+                <button type="submit" class="btn btn-dark">Enter</button>
+              </div>
+            </div>
+          </form>
+       </div>        
+    </div>
+{% endblock %}

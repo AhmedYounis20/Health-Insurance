@@ -7,10 +7,11 @@
 
 
 {% block content %}
+
 <h1><strong> {{hospital_records[0][0]}}
 </strong></h1>
 
-<h2><strong{% if hospital_records[0][7]  %} >website: <a href=""><em>{{hospital_records[0][7]}}</em> </a>{% endif %}
+<h2><strong> {% if hospital_records[0][7]  %} >website: <a href=""><em>{{hospital_records[0][7]}}</em> </a>{% endif %}
 </strong></h2>
 
 <h2><strong>Address:</strong></h2>

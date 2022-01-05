@@ -5,7 +5,15 @@
     <form action="" method='POST' class='form container'>
 
         <label class='form-item' for="HospitalName">Hospital Name:</label> <br>
-        <input class='form-item input' type="text" name='HospitalName' required>    <br>
+        <input  class='form-control input' autoComplete="on" list="suggestions" name='HospitalName' required placeholder="search for hospital..."/> 
+
+        <datalist id="suggestions">
+    {% if  error %} <script>alert('please choose A hospital that belongs to your Plan');</script> {% endif %}
+    {% for hospital  in hospitals %}
+    <option  value='{{hospital[0]}}'>{{hospital[0]}}</option>
+    {% endfor %}
+    </datalist>
+       <br>
         <label class='form-item' for="Email">Customer Email:</label> <br>
         <input class='form-item input ' type="email" name='Email' required> <br>
         <label class='form-item' for="Expense">Expense:</label> <br>

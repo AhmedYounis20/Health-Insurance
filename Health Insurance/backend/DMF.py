@@ -22,6 +22,10 @@ def planlist():
         print("exception", e)
     return(cur.fetchall())
 
+def changePlan(customerEmail,newPlan):
+    cur.execute(f"update Customer set PlanId={newPlan} where Email='{customerEmail}';")
+    database.commit();
+
 ########## Hospitals DM ##################
 
 def addhospital(name=None,website=None,country=None,region=None,city=None,street=None,Contacts=[],plans=[]):
@@ -41,7 +45,7 @@ def addhospital(name=None,website=None,country=None,region=None,city=None,street
 
 def HospitalDetails(id):
     try:
-        cur.execute(f'select name,country,region,city,street,type as plan ,phone,website  from hospital left join hospitalplan on  hospital.hospitalid=hospitalplan.hospitalid left join plan on hospitalplan.planid =plan.planid left join hospitalcontacts on  hospital.hospitalid=hospitalcontacts.hospitalid  where hospital.hospitalid={id};')
+        cur.execute(f'select name,country,region,city,street,type as plan ,phone,website,plan.planid  from hospital left join hospitalplan on  hospital.hospitalid=hospitalplan.hospitalid left join plan on hospitalplan.planid =plan.planid left join hospitalcontacts on  hospital.hospitalid=hospitalcontacts.hospitalid  where hospital.hospitalid={id};')
     except connector.Error  as e:
         print('exception',e)
     return cur.fetchall()
@@ -68,12 +72,13 @@ def RemoveHospital(id=None):
     except connector.Error as e:
         print(e)
 ########## Customer DM ##################
-def AddCustomer(FirstName=None,LastName=None,Age=None,Email=None,PlanId=1,Contacts=[]):
+def AddCustomer(FirstName=None,LastName=None,Age=None,Email=None,PlanId=1,Contacts=[],HolderId=0):
 
-    cur.execute(f"insert into customer(FirstName,LastName,holderid,Email,Age,planid,RegistrationDate) values('{FirstName}','{LastName}',0,'{Email}',{Age},{PlanId},'{str(datetime.now().strftime('%Y-%m-%d'))}')")
+    cur.execute(f"insert into customer(FirstName,LastName,holderid,Email,Age,planid,RegistrationDate) values('{FirstName}','{LastName}',{HolderId},'{Email}',{Age},{PlanId},'{str(datetime.now().strftime('%Y-%m-%d'))}')")
     database.commit()
-    cur.execute(f"update customer set holderid=customerid where email='{Email}';")
-    database.commit()
+    if HolderId==0:
+        cur.execute(f"update customer set holderid=customerid where email='{Email}';")
+        database.commit()
     cur.execute(f"select customerid from customer where email='{Email}';")
     Cus_id=cur.fetchone()[0]
     print(Cus_id)
@@ -92,9 +97,9 @@ def AddCustomer(FirstName=None,LastName=None,Age=None,Email=None,PlanId=1,Contac
 def CustomerDetails(id=None,email=None):
     try:
         if id :
-            cur.execute(f"select customer.CustomerId,HolderId,FirstName,LastName,Email,type,phone,age,RegistrationDate  from customer left join customercontact on customer.customerid=customercontact.customerid left join plan on customer.planid=plan.planid where customer.customerid={id}; ")
+            cur.execute(f"select customer.CustomerId,HolderId,FirstName,LastName,Email,type,phone,age,RegistrationDate,plan.PlanId  from customer left join customercontact on customer.customerid=customercontact.customerid left join plan on customer.planid=plan.planid where customer.customerid={id}; ")
         if email:
-            cur.execute(f"select customer.CustomerId,HolderId,FirstName,LastName,Email,type,phone,age,RegistrationDate  from customer left join customercontact on customer.customerid=customercontact.customerid left join plan on customer.planid=plan.planid where customer.email='{email}'; ")
+            cur.execute(f"select customer.CustomerId,HolderId,FirstName,LastName,Email,type,phone,age,RegistrationDate,plan.PlanId   from customer left join customercontact on customer.customerid=customercontact.customerid left join plan on customer.planid=plan.planid where customer.email='{email}'; ")
 
     except connector.Error as e:
         print(e)
@@ -118,31 +123,13 @@ def RemoveCustomer(id):
 
 
 ############## Dependent DM #################
-def AddDependent (hold_id, plan, first, last, email, age, date, admin): 
-    try: 
-        cur.execute(f"insert into customer(holderId, planId, FirstName, LastName, Email, Age, RegistrationDate, Stuff) values ({hold_id},{plan},'{first}','{last}','{email}','{age}','{date}','{admin}');") 
-    except connector.Error as e: 
-        print('Exception',e) 
-    database.commit(); 
 
 def AddDependent(holder_email, first, last, email, plan, age):
-    try:
-        cur.execute(F"select CustomerId from customer where Email='{holder_email}';")
-    except connector.Error as e:
-        print("exception", e)
-    holder_id = cur.fetchall()[0][0]
-    if plan == 'Basic':
-        plan = 1
-    elif plan == 'Premium':
-        plan = 2
-    else:
-        plan = 3
+
     submittingDate = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    try:
-        cur.execute(F"insert into customer(HolderId,PlanId,FirstName,LastName,Email,Age,RegistrationDate) values ({holder_id}, {plan}, '{first}', '{last}', '{email}', {age}, '{submittingDate}');")
-        database.commit()
-    except connector.Error as e:
-        print("exception", e)
+    cus_id=CustomerDetails(email=holder_email)[0][0]
+    AddCustomer( FirstName=first,LastName=last,PlanId=plan,Email=email,Age=age ,HolderId=cus_id)
+
 
 def DependentList(holder_id):
 
@@ -182,7 +169,7 @@ def UpdateDependant(**kwargs):
 ############### Claim DM ###########################
 # createclaim
 def CreateClaim (CustomerEmail,HospitalName,Description,Expense):
-    approved = 0
+    resolved = 0
     submittingDate = datetime.now().strftime('%Y-%m-%d')
     try:
         cur.execute(f"select CustomerId from Customer where Upper(Customer.Email)=Upper('{CustomerEmail}');")
@@ -193,22 +180,25 @@ def CreateClaim (CustomerEmail,HospitalName,Description,Expense):
         # print(result2)
         CustomerId= result1[0][0]
         HospitalId = result2[0][0]
-        cur.execute(f"insert into claim (HospitalId,CustomerId,Approved,SubmittingDate,Expense,Description) values ({HospitalId},{CustomerId},{approved},'{submittingDate}',{Expense},'{Description}');")
+        cur.execute(f"insert into claim (HospitalId,CustomerId,resolved,SubmittingDate,Expense,Description) values ({HospitalId},{CustomerId},{resolved},'{submittingDate}',{Expense},'{Description}');")
         database.commit()
     except connector.Error as e:
         print("Exception" , e)
 #ClaimDetail
 def ClaimDetail(id):
     try:
-        cur.execute(f'select name,country,region,city,street,customer.customerid,approved,submittingdate,expense,description,firstname,lastname,claim.claimid from customer,claim,hospital where claimid= {id} and claim.customerid=customer.customerid and hospital.hospitalid=claim.hospitalid and claim.customerid=customer.customerid;')
+        cur.execute(f'select name,country,region,city,street,customer.customerid,resolved,submittingdate,expense,description,firstname,lastname,claim.claimid from customer,claim,hospital where claimid= {id} and claim.customerid=customer.customerid and hospital.hospitalid=claim.hospitalid and claim.customerid=customer.customerid;')
     except connector.Error as e:
         print("exception", e)
     return cur.fetchall()
 
 
 #customerclaims
-def CustomerClaims(customer_id):
+def CustomerClaims(customer_id=None,CustomerEmail=None):
+        
     try:
+        if CustomerEmail:
+            customer_id=CustomerDetails(email=CustomerEmail)[0][0]
         cur.execute(f"select * from claim where CustomerId = {customer_id};")
     except connector.Error as e:
         print("exception", e)
@@ -240,5 +230,5 @@ def resolveClaims():
     return allCliams
     
 def resolveTheClaim(claimId):
-    cur.execute(f"update claim set Approved = 1 where ClaimId={claimId} ;")
+    cur.execute(f"update claim set resolved = 1 where ClaimId={claimId} ;")
     database.commit()

@@ -35,6 +35,15 @@ def PlanDetails(id):
     records=D.PlanDetails(id)
     return render_template('/plan/planDetails.html',records=records)
 
+@app.route('/home/changePlan' , methods=["POST","GET"])
+def changePlan():
+    if request.method == "GET" :
+        return render_template('/customer/changePlan.html')
+    else:
+        CustomerEmail = request.form.get("Email")
+        newPlan = request.form.get('newPlan')
+        D.changePlan(CustomerEmail,newPlan)
+        return redirect(url_for('home'))
 ############## Hospitals Routes #################
 @app.route('/hospital/register',methods = ['GET','POST'])
 def AddHospital():
@@ -88,7 +97,10 @@ def AddCustomer():
 
 @app.route('/customer/Profile')
 def CustomerProfile():
+    
     customer=D.CustomerDetails(email=request.args.get('Email'))
+    if len(customer) == 0:
+        return render_template('layout.html',error=True)
     contacts=[i[6]  for i in customer if i[6]!=None ]
     dependants=D.DependentList(customer[0][0])
     return render_template('customer/customerProfile.html',customer=customer,contacts=contacts,dependants=dependants) 
@@ -132,14 +144,24 @@ def DependantList():
 
 @app.route('/claim/create' , methods=["POST","GET"])
 def CreateClaim():
+    hospitals=D.HospitalList()
+
     if request.method == "GET" :
-        return render_template('claim/claimform.html')
+        return render_template('claim/claimform.html',hospitals=hospitals)
     else:
         CustomerEmail = request.form["Email"]
-        HospitalName = request.form["HospitalName"]
+        Hospital = request.form["HospitalName"]
+        Hospital_id=D.HospitalId(Hospital)
+        HospitalDetails=D.HospitalDetails(Hospital_id)
+        CustomerDetails=D.CustomerDetails(email=CustomerEmail)
+        
+        error = (HospitalDetails[0][8]!=CustomerDetails[0][9])
+        if error:
+            return render_template('claim/claimform.html',hospitals=hospitals,error=error)
+        
         Expense = request.form["Expense"]
         Description = request.form["Description"]
-        D.CreateClaim (CustomerEmail,HospitalName,Description ,Expense)
+        D.CreateClaim (CustomerEmail,Hospital,Description ,Expense)
         return redirect(url_for('home'))
 
 @app.route('/claim/<id>')
@@ -152,8 +174,8 @@ def ClaimList():
     if request.method == 'GET':
         return render_template('/claim/claimList.html')
     else:
-        customer_id = request.form.get('customer_id')
-        claims = D.CustomerClaims(customer_id)
+        CustomerEmail = request.form.get('Email')
+        claims = D.CustomerClaims(CustomerEmail=CustomerEmail)
         return render_template('/claim/claimListlist.html', data=claims)
 
 @app.route('/home/resolveClaims')

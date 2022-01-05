@@ -4,7 +4,7 @@ use InsuranceCompany;
 
 create table Hospital(
 HospitalId int not null AUTO_INCREMENT ,
-Name varchar(50),
+Name varchar(50) UNIQUE,
 Website varchar(50),
 Country varchar(50),
 Region varchar(50),
@@ -16,7 +16,7 @@ create table HospitalContacts(   /* multivalued attribute maybe more than one co
 ContactId int not null AUTO_INCREMENT primary key,
 HospitalId int not null,
 Phone varchar(20),
-foreign key (HospitalId ) references Hospital(hospitalId)  ON DELETE CASCADE
+foreign key (HospitalId ) references Hospital(hospitalId)  ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table Plan (
@@ -35,8 +35,8 @@ create table HospitalPlan(
 HospitalPlanId int not null AUTO_INCREMENT primary key,
 HospitalId int not null,
 PlanId int Not null,
-foreign key (HospitalId) references Hospital(HospitalId)  ON DELETE CASCADE,
-foreign key (PlanId)  references Plan(PlanId)  ON DELETE CASCADE
+foreign key (HospitalId) references Hospital(HospitalId)  ON DELETE CASCADE ON UPDATE CASCADE,
+foreign key (PlanId)  references Plan(PlanId)  ON DELETE CASCADE ON UPDATE CASCADE
 
 );
 
@@ -46,33 +46,33 @@ create table Customer(
   PlanId int not null,
   FirstName varchar(50),
   LastName varchar(50),
-  Email varchar(50),
+  Email varchar(50) UNIQUE,
   Age int,
   RegistrationDate Date,
   Stuff boolean,
   primary key (CustomerId,Email),
-  foreign key (HolderId) references Customer(CustomerId)  ON DELETE CASCADE,  /* one to many relationship between customer ---> dependents  */
-  foreign key (PlanId) references Plan(PlanId)   ON DELETE CASCADE /* one to many relationship between Plan ---> Customers/dependents */
+  foreign key (HolderId) references Customer(CustomerId)  ON DELETE CASCADE ON UPDATE CASCADE,  /* one to many relationship between customer ---> dependents  */
+  foreign key (PlanId) references Plan(PlanId)   ON DELETE CASCADE ON UPDATE CASCADE /* one to many relationship between Plan ---> Customers/dependents */
 );
 
 create table customerContact(  /* multivalued attribute maybe more than one contact  */
 ContactId int not null AUTO_INCREMENT primary key,
 CustomerId int not null,
 Phone varchar(20),
-foreign key (CustomerId) references Customer(CustomerId)  ON DELETE CASCADE
+foreign key (CustomerId) references Customer(CustomerId)  ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table claim(
  ClaimId int not null AUTO_INCREMENT primary key,
  HospitalId int not null,
  CustomerId int not null,
- Approved boolean,
+ resolved boolean,
  SubmittingDate date,
  Expense int,
  Description varchar(1000),
 
-foreign key (HospitalId) references Hospital(HospitalId)  ON DELETE CASCADE,
-foreign key (CustomerId) references Customer(CustomerId)  ON DELETE CASCADE
+foreign key (HospitalId) references Hospital(HospitalId)  ON DELETE CASCADE ON UPDATE CASCADE,
+foreign key (CustomerId) references Customer(CustomerId)  ON DELETE CASCADE ON UPDATE CASCADE
 
 
 )
