@@ -1,15 +1,24 @@
+import os
 from flask import Flask,redirect ,url_for,request
 from flask import render_template
 from mysql import connector
+from datetime import datetime
 import DMF as D
 database=connector.connect(host='localhost',
                     user='root',
                     password='raghad25',
                     database='insurancecompany')
 mycurs=database.cursor()
+UPLOAD_FOLDER = '../statics/images/admin'
+ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg', 'gif'}
+
 app=Flask(__name__,template_folder='../templates',static_folder='../statics')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.debug = True
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 ############ home Routes ###################
@@ -20,9 +29,6 @@ def first():
 @app.route('/home')
 def home():
     return render_template('layout.html')
-
-
-
 
 ########## Plans Routes ##################
 @app.route('/plan/all')
@@ -44,6 +50,7 @@ def changePlan():
         newPlan = request.form.get('newPlan')
         D.changePlan(CustomerEmail,newPlan)
         return redirect(url_for('home'))
+        
 ############## Hospitals Routes #################
 @app.route('/hospital/register',methods = ['GET','POST'])
 def AddHospital():
@@ -140,6 +147,33 @@ def AddDependent():
 def DependantList():
     return render_template('/customer/dependantList.html')
 
+
+
+############## Admin Routes #################
+@app.route('/admin/register',methods=['POST','GET'])
+def AddAdmin():
+    if request.method=="GET":
+        return render_template('admin/adminform.html')
+    else:
+        file=request.files['image']
+        if file and allowed_file(file.filename):
+            filename = request.form.get('FirstName')+request.form.get('LastName')+str(datetime.now().strftime('%Y-%m-%d'))+file.filename.split('.')[1]
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        else:
+            filename=None
+        D.AddAdmin(FirstName=request.form.get("FirstName"),LastName=request.form.get("LastName"),Age=request.form.get("Age"),Email=request.form.get("Email"),Facebook=request.form.get("Facebook"),Github=request.form.get("Github"),LinkedIn=request.form.get("LinkedIn"),Contacts=request.form.getlist("Phone"),imagepath=filename)
+        return redirect(f'/customer/Profile?Email={request.form.get("Email")}')
+
+@app.route('/admin/all')
+def AdminList():
+    admins=D.AdminList()
+    return render_template('admin/adminList.html',admins=admins)
+
+
+
+
+
+
 ############## Claims Routes #################
 
 @app.route('/claim/create' , methods=["POST","GET"])
@@ -178,17 +212,22 @@ def ClaimList():
         claims = D.CustomerClaims(CustomerEmail=CustomerEmail)
         return render_template('/claim/claimListlist.html', data=claims)
 
-@app.route('/home/resolveClaims')
+@app.route('/home/resolveClaims',methods=['GET','POST'])
 def resolveClaims():
-    allclaims =D.resolveClaims()
+    if request.method=='GET':
+        allclaims =D.resolveClaims()
+        return render_template('/claim/resolveClaims.html' , allclaims=allclaims)
+    else:
+        print(request.form.get('claimId'))
+        D.resolveTheClaim(request.form.get('claimId'))
+        allclaims =D.resolveClaims()
+        return render_template('/claim/resolveClaims.html' , allclaims=allclaims)
 
-    return render_template('/claim/resolveClaims.html' , allclaims=allclaims)
 
-@app.route('/home/resolveClaims/<claimId>')
-def resolving(claimId):
-    D.resolveTheClaim(claimId)
-    allclaims =D.resolveClaims()
-    return render_template('/claim/resolveClaims.html' , allclaims=allclaims)
+
+
+
+
 
 ########################### main function to run flask
 if __name__=='__main__':

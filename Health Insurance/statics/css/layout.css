@@ -10,16 +10,29 @@ min-width: 100px;
 .active{
     color:brown;
 }
-body{
+/* body{
     background: url("../images/background.jpg") ;
     position:relative;
     background-size: cover;
     background-attachment: fixed;
     padding-bottom: 100px;
+
     
+} */
+.brand{
+    width:100px;
+    height:50px;
+}
+body{
+    background-color: #141414 !important;
+    padding-bottom: 100px;
+    position:relative;
+
+
 }
 .navbar-inner {
-    background:transparent;
+    /* background:transparent; */
+    background-color: #141014 !important ;
 }
 .nav-link{
     border-radius: 30px;
@@ -43,4 +56,31 @@ body{
     border:1px;
     border-width: 1px;
     border-style: solid;
+}
+
+.resolve {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .form-label{
+      color:saddlebrown;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-style: italic;
+      font-size: medium;
+      font-weight: bold;
+    }
+
+.admin-pic{
+
+
+    width: 200px;
+    height: 200px;
 }

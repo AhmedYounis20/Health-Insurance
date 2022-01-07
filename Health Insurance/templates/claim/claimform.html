@@ -2,10 +2,10 @@
 
 {% block content %}
  <h1 class='container form-title' > <em><strong> apply a claim </strong></em></h1>
-    <form action="" method='POST' class='form container'>
+    <form action="" method='POST' class='form container text-light'>
 
-        <label class='form-item' for="HospitalName">Hospital Name:</label> <br>
-        <input  class='form-control input' autoComplete="on" list="suggestions" name='HospitalName' required placeholder="search for hospital..."/> 
+        <label class='input-label' for="HospitalName">Hospital Name:</label> <br>
+        <input  class='form-control form-item input' autoComplete="on" list="suggestions" name='HospitalName' required placeholder="search for hospital..."/> 
 
         <datalist id="suggestions">
     {% if  error %} <script>alert('please choose A hospital that belongs to your Plan');</script> {% endif %}
@@ -14,11 +14,11 @@
     {% endfor %}
     </datalist>
        <br>
-        <label class='form-item' for="Email">Customer Email:</label> <br>
+        <label class='input-label' for="Email">Customer Email:</label> <br>
         <input class='form-item input ' type="email" name='Email' required> <br>
-        <label class='form-item' for="Expense">Expense:</label> <br>
+        <label class='input-label' for="Expense">Expense:</label> <br>
         <input class='form-item input' type="number"  min="1" step="any" name='Expense' required>    <br>
-        <label class='form-item' for="Region">Description:</label> <br>
+        <label class='input-label' for="Region">Description:</label> <br>
         <textarea class='form-item input ' name='Description' required placeholder="Please Write your claim description here..."></textarea>    <br>
         <input class='btn btn-primary pr-3' type="submit" value='apply' required> 
         <a href='#' class='btn btn-danger'> cancel</a>

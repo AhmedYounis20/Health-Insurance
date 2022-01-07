@@ -3,12 +3,40 @@
 <h1 class='container form-title' > <em><strong> customer claims list</strong></em></h1>
 {% for claim in data %}
     
-<div class='container card mb-3 '>
-<h3>  <a href="{{url_for('ClaimDetails',id=claim[0])}}">
-     
-    {{claim[0]}} </a>
-</h3>
-</div>
 
+<div class='container-fluid p-5'>
+    <table id='main-table' class="table table-dark ">
+        <thead>
+        <tr>
+            <th class="text-center"scope="col">ClaimID</th>
+            <th class="text-center"  scope="col-x5">Expense</th>
+            <th class="text-center"scope="col">Description</th>
+            <th class="text-center"scope="col">State</th>
+
+    
+        </tr>
+        </thead>
+        <tbody id="parentBody">
+    
+            {%for claim in data %}
+                    <tr>
+                        <td class='text-center'><a href="{{url_for('ClaimDetails',id=claim[0])}}">{{claim[0]}}</a></td>
+                        <td class='text-center' >
+                            {{claim[5]}}
+                           </td>
+    
+                        <td class='text-center' style="text-overflow: ellipsis;">
+                            {{claim[6]}}
+                           </td>
+    
+                        <td class='text-center'> {% if claim[3] %} Resolved {% else %} UnResolved {% endif %}</td>
+    
+    
+                        
+                    </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
 {% endfor %}
 {% endblock %}

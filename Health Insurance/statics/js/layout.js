@@ -19,7 +19,7 @@ $('#Remove').on('mouseleave', function() {
 });
 
 $('.add_phone').on('click',function(){
-$('.contacts').append("<div id='plus-contact'><input class='form-item input ' type='tel' name='Phone' > <a class='btn ' id='remove_phone' onclick='  this.parentElement.remove();return false;' ><i class='fas fa-minus-square'></i></a></div>")
+$('.contacts').append("<div id='plus-contact'><input class='form-item input ' type='tel' name='Phone' > <a class='btn btn-info' id='remove_phone'style='margin-top : -10px;' placeholder='+321432123' onclick='  this.parentElement.remove();return false;' ><i class='fas fa-minus-square'></i></a></div>")
 
 return false;
 });

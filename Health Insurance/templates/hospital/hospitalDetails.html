@@ -7,11 +7,11 @@
 
 
 {% block content %}
-
+<div class='text-light ms-5'>
 <h1><strong> {{hospital_records[0][0]}}
 </strong></h1>
 
-<h2><strong> {% if hospital_records[0][7]  %} >website: <a href=""><em>{{hospital_records[0][7]}}</em> </a>{% endif %}
+<h2><strong> {% if hospital_records[0][7]  %} website: <a href=""><em>{{hospital_records[0][7]}}</em> </a>{% endif %}
 </strong></h2>
 
 <h2><strong>Address:</strong></h2>
@@ -27,9 +27,9 @@
 
 <h2><strong>Contacts:</strong></h2>
 
-<ul>
     {% for i in hospital_contacts %}
-    <li>{{i}}</li>{% endfor %}
-    </ul>
-
+    <p> <a href="tel:{{i}}">{{i}}</a> </p>
+    
+    {% endfor %}
+</div>
 {% endblock %}

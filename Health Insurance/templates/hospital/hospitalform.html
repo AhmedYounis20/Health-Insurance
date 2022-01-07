@@ -5,36 +5,36 @@
 
 {% block content %}
  <h1 class='container form-title' > <em><strong> add Hosptial</strong></em></h1>
- <form action="{{url_for('AddHospital')}}" class='form container' method="post">
+ <form action="{{url_for('AddHospital')}}" class='form container text-light' method="post">
 
-    <label class='form-item' for="Name">Hospital Name:</label> <br>
+    <label class='input-label' for="Name">Hospital Name:</label> <br>
     <input class='form-item input' type="text" name='HospitalName' value=''  required>    <br>
-    <label class='form-item' for="Name">Hospital Website:</label> <br>
+    <label class='input-label ' for="Name">Hospital Website:</label> <br>
     <input class='form-item input' type="url" name='Website' values="http://www.example.com">    <br>
-     <input class='form-item' type="checkbox"  name="plan" value="1">
-<label for="plan"> basic</label><br>
+     <input class='form-item ' type="checkbox"  name="plan" value="1">
+<label for="plan" class='input-label'> basic</label><br>
 <input class='form-item' type="checkbox"  name="plan" value="2" >
-<label for="plan"> premium</label><br>
+<label for="plan" class='input-label'> premium</label><br>
 <input class='form-item' type="checkbox"  name="plan" value="3" >
-<label for="plan"> gold</label><br>
-<label class='form-item' for="Phone" >Hospital phone:</label> <br>
+<label for="plan" class='input-label'> gold</label><br>
+<label class='input-label ' for="Phone" >Hospital phone:</label> <br>
 
 
     <div class='contacts'>
       <input class='form-item input ' type="tel" name='Phone'  placeholder='+321432123' > 
-     <button class='add_phone'><i class="fas fa-plus-square"></i></button><br>
+     <button class='add_phone btn btn-info' style='margin-top: -10px;'><i class="fas fa-plus-square"></i></button><br>
  
  
  
  </div>
-    <label class='form-item' for="Country" required>Country:</label> <br>
-    <input class='form-item input' type="text" name='Country'>    <br>
-    <label class='form-item' for="Region" required>Region:</label> <br>
+    <label class='input-label ' for="Country" required>Country:</label> <br>
+    <input class='form-item input  ' type="text" name='Country'>    <br>
+    <label class='input-label ' for="Region" required>Region:</label> <br>
     <input class='form-item input' type="text" name='Region'>    <br>
-    <label class='form-item' for="City" required>City</label> <br>
+    <label class='input-label ' for="City" required>City</label> <br>
     <input class='form-item input' type="text" name='City'>    <br>
   
-    <label class='form-item' for="Street" required>Street</label> <br>
+    <label class='input-label ' for="Street" required>Street</label> <br>
     <input class='form-item input' type="text" name='Street'>    <br>
   
   

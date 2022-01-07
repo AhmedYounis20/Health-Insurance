@@ -4,13 +4,16 @@
 
 }
 .form-item{
-    background-color: transparent;
+    /* background-color: transparent; */
+    
+    background-color: #6F313C !important ;
     margin-bottom: 1.5%;
 
 }
 .input{
     min-width: 80%;
     width:400px;
+    border-radius: 5px;
 }
 .btn{
     margin-right: 20px;
@@ -18,9 +21,60 @@
 }
 .form-title{
     color:rgba(128, 115, 0, 0.897);
+    font-style: oblique;
+    font-family: 'Times New Roman', Times, serif;
 }
 .input-name{
     width:15%;
+    border-radius: 5px;
+
+}
+input[type='text']{
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color:ivory;
+    padding-left: 10px;
+
+}
+input[type='email']{
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color:ivory;
+    padding-left: 10px;
+
+    
+}
+input[type='number']{
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color:ivory;
+    padding-left: 10px;
+
+    
+
+}
+input[type='url']{
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color:ivory;
+    padding-left: 10px;
+
+
+}
+input[type='tel']{
+    font-size: 22px;
+    font-weight: bold;
+    font-style: italic;
+    color:ivory;
+    padding-left: 10px;
+    margin-top: 2px;
+
+    
+
 }
 .last-name{
     margin-left: 50px;
@@ -32,3 +86,9 @@ textarea{
     height: 150px;
 }
 
+.input-label{
+    font-size: x-large;
+    font-weight: 100;
+    font-style: oblique;
+    font-family: 'Times New Roman', Times, serif;
+}

@@ -5,39 +5,40 @@
 {% if update %}
 <h1 class='container form-title' > <em><strong> Update Customer Data</strong></em></h1>
 {% else %}
- <h1 class='container form-title' > <em><strong> add Customer</strong></em></h1>
+ <h1 class='container form-title' > <em><strong> Add Admin</strong></em></h1>
  {% endif %}
-<form action="{{url_for('AddCustomer')}}" class='form container text-light' method="post">
+<form action="{{url_for('AddAdmin')}}" class='form container text-light' method="post" enctype='multipart/form-data'>
 
     <label class='input-label' for="FirstName">First Name:</label> 
     <input class='form-item input-name' type="text" name='FirstName' required>    
     <label class='input-label last-name' for="lastName">Last Name:</label> 
     <input class='form-item input-name ' type="text" name='LastName' required>    <br>
-     <label class='input-label' for="Email">Email:</label> <br>
-     <input class='form-item input ' type="email" name='Email' required>    <br>
+    <label class='input-label' for="Email">Email:</label> <br>
+    <input class='form-item input ' type="email" name='Email' required>    <br>
+    <label class='input-label' for="Facebook">Facebook:</label> <br>
+    <input class='form-item input ' type="url" name='Facebook'>    <br>
+    <label class='input-label' for="Github">Github:</label> <br>
+    <input class='form-item input ' type="url" name='Github' >    <br>
+    <label class='input-label' for="LinkedIn">LinkedIn:</label> <br>
+    <input class='form-item input ' type="url" name='LinkedIn' >    <br>
      <label class='input-label' for="Phone">Phone:</label> <br>
 <div class='contacts'>
      <input class='form-item input ' type="tel" name='Phone' > 
      <button class='add_phone btn btn-info' style='margin-top: -10px;'><i class="fas fa-plus-square"></i></button><br>
- 
+
 
 
 </div>
 
-     <label class='input-label' for="Plan" >Plan:</label> <br>
-
-     <input type="radio" name="Plan" value=1 checked='true'>      
-     <label class='input-label radio' for="Basic">Basic</label> 
-     <input type="radio" name="Plan" value=2>    
-     <label class='input-label radio' for="Premium">Premium</label> 
-     <input class='form-item ' type="radio" name="Plan" value=3 >
-     <label class='input-label  ' for="Gold">Gold</label> <br> 
-
      <label class='input-label' for="Age">Age:</label> <br>
 
      <input class='form-item input' type="number" name='Age'>    <br>
-
+     <label class='input-label' for="Age">please upload Profile Image:</label> 
+     <div class='col-xs-2'>
+        <input type="file" name='image' class='input-labelinput input-sm mb-3 ' width='100px;'> <br>
   
+     </div>
+
     <input class='btn btn-primary pr-3' type="submit" value='add'> 
     <a href='#' class='btn btn-danger'> cancel</a>
 

@@ -9,7 +9,7 @@ cur=database.cursor()
 def PlanDetails(id):
     result=[]
     try:
-        cur.execute(f'select type,description,name,website,country,region,city,street from plan,hospitalplan,hospital where plan.planid=hospitalplan.planid and hospitalplan.hospitalid=hospital.hospitalid and plan.planid={id};')
+        cur.execute(f'select type,description,name,website,country,region,city,street,hospital.hospitalid from plan,hospitalplan,hospital where plan.planid=hospitalplan.planid and hospitalplan.hospitalid=hospital.hospitalid and plan.planid={id};')
         result+=cur.fetchall()
     except connector.Error as e:
         print("exception", e)
@@ -71,14 +71,23 @@ def RemoveHospital(id=None):
 
     except connector.Error as e:
         print(e)
-########## Customer DM ##################
-def AddCustomer(FirstName=None,LastName=None,Age=None,Email=None,PlanId=1,Contacts=[],HolderId=0):
 
-    cur.execute(f"insert into customer(FirstName,LastName,holderid,Email,Age,planid,RegistrationDate) values('{FirstName}','{LastName}',{HolderId},'{Email}',{Age},{PlanId},'{str(datetime.now().strftime('%Y-%m-%d'))}')")
-    database.commit()
+
+########## admin DM ##################
+
+########## Customer DM ##################
+def AddCustomer(FirstName=None,LastName=None,Age=None,Email=None,PlanId=1,Contacts=[],HolderId=0,stuff=0):
+
+
     if HolderId==0:
+        cur.execute(f"insert into customer(FirstName,LastName,holderid,Email,Age,planid,RegistrationDate,stuff) values('{FirstName}','{LastName}',1,'{Email}','{Age}',{PlanId},'{str(datetime.now().strftime('%Y-%m-%d'))}','{stuff}')")
+        database.commit()
         cur.execute(f"update customer set holderid=customerid where email='{Email}';")
         database.commit()
+    else:
+        cur.execute(f"insert into customer(FirstName,LastName,holderid,Email,Age,planid,RegistrationDate,stuff) values('{FirstName}','{LastName}',{HolderId},'{Email}','{Age}',{PlanId},'{str(datetime.now().strftime('%Y-%m-%d'))}','{stuff}')")
+        database.commit()
+
     cur.execute(f"select customerid from customer where email='{Email}';")
     Cus_id=cur.fetchone()[0]
     print(Cus_id)
@@ -164,6 +173,22 @@ def UpdateDependant(**kwargs):
     UpdateCustomer(kwargs)
 
 
+##################### admin #############
+def AddAdmin(FirstName=None,LastName=None,Age=None,Email=None,Facebook=None,Github=None,LinkedIn=None,imagepath=None,Contacts=[]):
+    try:
+        cur.execute(f"insert into admin(firstname,lastname,age,email,facebook,github,linkedin,imagepath,RegistrationDate)values('{FirstName}','{LastName}','{Age}','{Email}','{Facebook}','{Github}','{LinkedIn}','{imagepath}','{str(datetime.now().strftime('%Y-%m-%d'))}');")
+        database.commit()
+        AddCustomer(FirstName=FirstName,LastName=LastName,Age=Age,Email=Email,Contacts=Contacts,stuff=1,PlanId=3)
+    except connector.Error as e:
+        print(e)
+        
+
+def AdminList():
+    try:
+        cur.execute('select * from admin;')
+    except connector.error as e :
+        print(e)
+    return cur.fetchall();
 
 
 ############### Claim DM ###########################

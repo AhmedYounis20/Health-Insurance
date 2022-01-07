@@ -4,30 +4,35 @@
 
 
 {% block content %}
-<h1>Claim ID:{{ records[0][12] }}</h1>
-<p><em><strong>Hospital Name :</strong></br>{{records[0][0]}}</strong></em></p>
-<p><strong>Adress:<em>
-{%for i in range(1,4)%} 
-
-{% if records[0][i]!=None %}
-{{records[0][i]}}, {% endif %}
-{% endfor %}
-{% if records[0][4]!=None %}
-{{records[0][4]}} {% endif %}.
-</em></strong></p>
-<p><strong>Customer Name :</br>{{records[0][10]}} {{records[0][11]}}</strong>
-
-<em> with ID :{{records[0][5]}}</em></p>
-
-<h1>Approved:</h1>
-{% if records[0][6] >0 %}
-<h1> YES</h1>
-{% else %}
-<h1> Waiting</h1>
-{% endif %}
+<div class='text-light ms-5'>
 
 
-<h1>Submitting Date:{{ records[0][7] }}</h1>
-<h1>Expense :{{ records[0][8] }}</h1>
-<h1>Descreption :{{ records[0][9] }}</h1>
+    <h1>Claim ID:{{ records[0][12] }}</h1>
+    <h2><em><strong>Hospital Name </strong></br><span class='ms-3'>{{records[0][0]}}</span></strong></em></h2>
+    <h3><strong>Adress:</strong><em>
+    {%for i in range(1,4)%} 
+    
+    {% if records[0][i]!=None %}
+    {{records[0][i]}}, {% endif %}
+    {% endfor %}
+    {% if records[0][4]!=None %}
+    {{records[0][4]}} {% endif %}.
+    </em></h3>
+    <h2><strong>Customer Name </strong></br> <span class='ms-3'>{{records[0][10][0]|upper}}{{records[0][10][1:]}} {{records[0][11][0]|upper}}{{records[0][11][1:]}} </span>
+    
+    <em> with ID :{{records[0][5]}}</em></h2>
+    
+    <h2>State:</h2>
+    {% if records[0][6] >0 %}
+    <h3  class='ms-5'> Resolved</h3>
+    {% else %}
+    <h3 class='ms-5'> Waiting</h3>
+    {% endif %}
+    
+    
+    <h2>Submitting Date: {{ records[0][7] }}</h2>
+    <p style='font-size: xx-large; font-weight: normal;'><strong >Expense:</strong> <em> {{ records[0][8] }}</em> </p>
+    <h1>Descreption:</h1>  <p class='ms-5' style='font-size: xx-large; font-weight: normal; font-style: italic;'>{{ records[0][9] }}</p>
+
+</div>
 {% endblock %}

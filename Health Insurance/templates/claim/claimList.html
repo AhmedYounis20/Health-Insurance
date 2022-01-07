@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
 <h1 class='container form-title' > <em><strong> customer claims</strong></em></h1>
-<form action="all" class='form container' method='post'>
-    <label class='form-item' for="customer_id">Customer Email:</label> <br>
+<form action="all" class='form container text-light' method='post'>
+    <label class='input-label' for="customer_id">Customer Email:</label> <br>
     <input class='form-item input' type="email" name='Email'> <br>
     <input class='btn btn-primary pr-3' type="submit" value='show claims'> 
     <a href='/' class='btn btn-danger'> cancel</a>

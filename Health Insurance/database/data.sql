@@ -1,6 +1,20 @@
 drop database Insurancecompany;
 create database InsuranceCompany;
 use InsuranceCompany;
+create table admin(
+
+adminid int AUTO_INCREMENT not null,
+FirstName varchar(50),
+LastName varchar(50),
+Email varchar(50) UNIQUE not null,
+imagepath varchar(100),
+facebook varchar(100),
+github varchar(100),
+linkedIn varchar(100),
+Age int,
+RegistrationDate Date,
+primary key (adminid)
+);
 
 create table Hospital(
 HospitalId int not null AUTO_INCREMENT ,
@@ -46,11 +60,11 @@ create table Customer(
   PlanId int not null,
   FirstName varchar(50),
   LastName varchar(50),
-  Email varchar(50) UNIQUE,
+  Email varchar(50) UNIQUE not null,
   Age int,
   RegistrationDate Date,
   Stuff boolean,
-  primary key (CustomerId,Email),
+  primary key (CustomerId),
   foreign key (HolderId) references Customer(CustomerId)  ON DELETE CASCADE ON UPDATE CASCADE,  /* one to many relationship between customer ---> dependents  */
   foreign key (PlanId) references Plan(PlanId)   ON DELETE CASCADE ON UPDATE CASCADE /* one to many relationship between Plan ---> Customers/dependents */
 );
@@ -75,4 +89,4 @@ foreign key (HospitalId) references Hospital(HospitalId)  ON DELETE CASCADE ON U
 foreign key (CustomerId) references Customer(CustomerId)  ON DELETE CASCADE ON UPDATE CASCADE
 
 
-)
+);

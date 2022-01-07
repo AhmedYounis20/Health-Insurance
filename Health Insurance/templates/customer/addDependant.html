@@ -2,25 +2,25 @@
 
 
 {% block content %}  
- <h1 class='container form-title' > <em><strong> add Dependant</strong></em></h1>
-<form action="addDependent" class='form container' method='post'>
-    <label class='form-item ' for="HolderEmail">HolderEmail:</label> 
+ <h1 class='container form-title' > <em><strong> Add Dependant</strong></em></h1>
+<form action="addDependent" class='form container text-light' method='post'>
+    <label class='input-label ' for="HolderEmail">HolderEmail:</label> 
     <input class='form-item input' type="email" name='HolderEmail'> <br>
-    <label class='form-item' for="FirstName">First Name:</label> 
+    <label class='input-label' for="FirstName">First Name:</label> 
     <input class='form-item input-name' type="text" name='FirstName'>    
-    <label class='form-item last-name' for="lastName">Last Name:</label> 
+    <label class='input-label last-name' for="lastName">Last Name:</label> 
     <input class='form-item input-name ' type="text" name='LastName'>    <br>
-     <label class='form-item' for="Email">Email:</label> <br>
+     <label class='input-label' for="Email">Email:</label> <br>
      <input class='form-item input ' type="email" name='Email'>    <br>
-     <label class='form-item' for="Plan">Plan:</label> <br>
+     <label class='input-label' for="Plan">Plan:</label> <br>
      <input type="radio" name="Plan" value=1 checked='true'>      
-     <label class='form-item radio' for="Basic">Basic</label> 
+     <label class='input-label radio' for="Basic">Basic</label> 
      <input type="radio" name="Plan" value=2>    
-     <label class='form-item radio' for="Premium">Premium</label> 
+     <label class='input-label radio' for="Premium">Premium</label> 
 
      <input class='form-item ' type="radio" name="Plan" value=3 >
-     <label class='form-item  ' for="Gold">Gold</label> <br> 
-     <label class='form-item' for="Age">Age:</label> <br>
+     <label class='input-label  ' for="Gold">Gold</label> <br> 
+     <label class='input-label' for="Age">Age:</label> <br>
 
      <input class='form-item input' type="number" name='Age'>    <br>
     
